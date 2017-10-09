@@ -3,20 +3,17 @@ FROM node:8-alpine
 ENV PARSE_HOME /parse
 ENV CLOUD_CODE_HOME ${PARSE_HOME}/cloud
 
-ADD ../../* ${PARSE_HOME}/
+ENV NODE_TEMP /node
+RUN mkdir -p ${NODE_TEMP}
+ADD package.json ${NODE_TEMP}
+RUN cd ${NODE_TEMP} && npm install && mkdir -p ${PARSE_HOME} && cp -a ${NODE_TEMP}/node_modules ${PARSE_HOME} && rm -rf ${NODE_TEMP}
 
 WORKDIR $PARSE_HOME
-RUN npm install
+
+ADD . ${PARSE_HOME}
 
 ENV PORT 1337
 
-
-# ENV
-# TRUST_PROXY
-
-
 EXPOSE $PORT
-VOLUME $CLOUD_CODE_HOME
-ENV NODE_PATH .
 
 CMD ["npm", "start"]

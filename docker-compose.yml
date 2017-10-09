@@ -20,10 +20,13 @@ services:
     ports:
       - "5432:5432"
     environment:
-        POSTGRES_DB: parse
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
+        # https://github.com/mrts/docker-postgresql-multiple-databases
+        # - POSTGRES_MULTIPLE_DATABASES=db1,db2
+        POSTGRES_MULTIPLE_DATABASES: QG0P2ULIEPP4
     volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ./volume/pgdata:/var/lib/postgresql/data
     restart: always
 

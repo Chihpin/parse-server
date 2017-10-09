@@ -3,7 +3,7 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var links = require('docker-links').parseLinks(process.env);
-const URL = require('url');
+const { URL } = require('url');
 var fs = require('fs');
 
 var isFile = function(f) {
@@ -61,11 +61,11 @@ if (config.s3) {
 // ----------------------------------------
 function addApp(server, item) {
 
-    console.log('----------------------------------------');
-    console.log('config:%j',item);
-    console.log('----------------------------------------');
-    console.log(item.appName);
-    console.log('----------------------------------------');
+    // console.log('----------------------------------------');
+    // console.log('config:%j',item);
+    // console.log('----------------------------------------');
+    // console.log(item.appName);
+    // console.log('----------------------------------------');
 
     // ----------------------------------------
     var pushConfig = {};
@@ -98,7 +98,7 @@ function addApp(server, item) {
             };
             iosPushConfigs.push(pushConfig);
         }
-        console.log('ios:' + item.iphone[i].bundleId);
+        // console.log('ios:' + item.iphone[i].bundleId);
     }
     if (iosPushConfigs.length > 0) {
         pushConfig.ios = iosPushConfigs;
@@ -115,8 +115,8 @@ function addApp(server, item) {
             apiKey: gcmKey
         }
     }
-    console.log('android:' + item.android['bundleId']);
-    console.log('2----------------------------------------');
+    // console.log('android:' + item.android['bundleId']);
+    // console.log('2----------------------------------------');
 
 
     // --》Server
@@ -130,39 +130,39 @@ function addApp(server, item) {
     // a.search     //=> ?query=string
     // a.hash       //=> #fragment
     // a.host       //=> domain.com:3000
-    console.log(item.serverURL);
-    var a = URL.parse(JSON.stringify(item.serverURL));
+    // console.log(item.serverURL);
+    var a = new URL(item.serverURL);
     var mountPath = a.pathname;
     var serverURL = item.serverURL || 'http://' + 'localhost' + ':' + port + mountPath; // Don't forget to change to https if needed
     apps_url.push(serverURL);
-    console.log('mountPath:' + mountPath);
-    console.log('serverURL:' + serverURL);
-    console.log('3----------------------------------------');
+    // console.log('mountPath:' + mountPath);
+    // console.log('serverURL:' + serverURL);
+    // console.log('3----------------------------------------');
 
     // --》Email
     // --》邮箱
     // ----------------------------------------
-    var email = JSON.parse(JSON.stringify(item.email))
-    var emailModule = email.module;
-    var verifyUserEmails = !!+(email.verfyUserEmail);
+    var verifyUserEmails = !!+(item.verfyUserEmail);
     var emailAdapter;
-    if (!emailModule) {
-        verifyUserEmails = false;
-    } else {
-        emailAdapter = {
-            module: emailModule,
-            options: {
-                fromAddress: email.from,
-                domain: email.domain,
-                apiKey: email.apiKey
-            }
-        };
+    var email = item.email;
+    if (email) {
+        var emailModule = email.module;
+        if (emailModule) {
+            emailAdapter = {
+                module: emailModule,
+                options: {
+                    fromAddress: email.from,
+                    domain: email.domain,
+                    apiKey: email.apiKey
+                }
+            };
+        }
+        // console.log('email:Module' + emailModule);
+        // console.log('email:verifyUserEmails' + verifyUserEmails);
+        // console.log('email:from' + email.from,);
+        // console.log('email:apiKey' + email.apiKey,);
+        // console.log('3----------------------------------------');
     }
-    console.log('email:Module' + emailModule);
-    console.log('email:verifyUserEmails' + verifyUserEmails);
-    console.log('email:from' + email.from,);
-    console.log('email:apiKey' + email.apiKey,);
-    console.log('3----------------------------------------');
 
 
     // --》Live Query
@@ -182,8 +182,8 @@ function addApp(server, item) {
             socketTimeoutMS: +(item.database.timeout)
         };
     }
-    console.log('database:' + item.database.uri);
-    console.log('4----------------------------------------');
+    // console.log('database:' + item.database.uri);
+    // console.log('4----------------------------------------');
 
     // --》Auth
     // ----------------------------------------
@@ -209,17 +209,17 @@ function addApp(server, item) {
     cloud_code = isFile(cloud_code) || null;
 
 
-    console.log('-----------------------------*');
-    console.log(serverURL);
-    console.log(item.database.uri);
-    console.log(item.appName);
-    console.log(item.masterKey);
-    console.log(item.clientKey);
-    console.log(item.restKey);
-    console.log(item.fileKey);
-    console.log(item.javascriptKey);
-    console.log(item.dotnetKey);
-    console.log('-----------------------------*');
+    // console.log('-----------------------------*');
+    // console.log(serverURL);
+    // console.log(item.database.uri);
+    // console.log(item.appName);
+    // console.log(item.masterKey);
+    // console.log(item.clientKey);
+    // console.log(item.restKey);
+    // console.log(item.fileKey);
+    // console.log(item.javascriptKey);
+    // console.log(item.dotnetKey);
+    // console.log('-----------------------------*');
 
 
     // *****************************************
