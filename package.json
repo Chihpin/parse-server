@@ -1,0 +1,30 @@
+{
+  "name": "parse-server",
+  "version": "2.6.2",
+  "description": "Parse Server",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chihpin/parse-server"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "docker-links": "^1.0.2",
+    "express": "~4.14.x",
+    "express-graphql": "^0.6.1",
+    "graphql": "^0.8.2",
+    "kerberos": "~0.0.x",
+    "mongodb": "2.2.10",
+    "nodemon": "^1.11.0",
+    "parse": "~1.10.0",
+    "parse-server": "2.6.2",
+    "parse-server-azure-storage": "^1.1.0"
+  },
+  "scripts": {
+    "dev": "nodemon --watch /parse/cloud index.js",
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=4.3"
+  }
+}
