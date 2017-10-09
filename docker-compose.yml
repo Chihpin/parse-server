@@ -8,6 +8,11 @@ services:
       - "1337:1337"
     links:
       - postgres
+    depends_on:
+      - postgres
+    environment:
+      TRUST_PROXY: 0
+      ALLOW_CLIENT_CLASS_CREATION: 1
     volumes:
       - "./certs:/certs"
       - "./config.json:/parse/config.json"
@@ -24,7 +29,7 @@ services:
         POSTGRES_PASSWORD: postgres
         # https://github.com/mrts/docker-postgresql-multiple-databases
         # - POSTGRES_MULTIPLE_DATABASES=db1,db2
-        POSTGRES_MULTIPLE_DATABASES: QG0P2ULIEPP4
+        POSTGRES_MULTIPLE_DATABASES: qiu
     volumes:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ./volume/pgdata:/var/lib/postgresql/data
@@ -34,6 +39,8 @@ services:
     container_name: parse-dashboard
     image: czbin/parse-dashboard:1.1.0
     links:
+      - api
+    depends_on:
       - api
     environment:
       PARSE_DASHBOARD_ALLOW_INSECURE_HTTP: 1
