@@ -3,7 +3,7 @@ version: '2'
 services:
   api:
     container_name: parse-api
-    image: czbin/parse-server
+    image: czbin/parse-server:2.6.2-alpine
     ports:
       - "1337:1337"
     links:
