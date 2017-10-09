@@ -15,7 +15,7 @@ var isFile = function(f) {
     return b;
 }
 
-isFile('./config.json') || fs.createReadStream('./sample/config.json').pipe(fs.createWriteStream('./config.json'));
+// isFile('./config.json') || fs.createReadStream('./sample/config.json').pipe(fs.createWriteStream('./config.json'));
 
 var config = require('./config.json');
 var port = process.env.PORT || 1337;
@@ -142,8 +142,9 @@ function addApp(server, item) {
     // --》Email
     // --》邮箱
     // ----------------------------------------
-    var emailModule = item.email.module;
-    var verifyUserEmails = !!+(item.email.verfyUserEmail);
+    var email = JSON.parse(JSON.stringify(item.email))
+    var emailModule = email.module;
+    var verifyUserEmails = !!+(email.verfyUserEmail);
     var emailAdapter;
     if (!emailModule) {
         verifyUserEmails = false;
@@ -151,16 +152,16 @@ function addApp(server, item) {
         emailAdapter = {
             module: emailModule,
             options: {
-                fromAddress: item.email.from,
-                domain: item.email.domain,
-                apiKey: item.email.apiKey
+                fromAddress: email.from,
+                domain: email.domain,
+                apiKey: email.apiKey
             }
         };
     }
     console.log('email:Module' + emailModule);
     console.log('email:verifyUserEmails' + verifyUserEmails);
-    console.log('email:from' + item.email.from,);
-    console.log('email:apiKey' + item.email.apiKey,);
+    console.log('email:from' + email.from,);
+    console.log('email:apiKey' + email.apiKey,);
     console.log('3----------------------------------------');
 
 

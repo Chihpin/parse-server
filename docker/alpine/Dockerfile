@@ -1,9 +1,9 @@
-FROM node:8
+FROM node:8-alpine
 
 ENV PARSE_HOME /parse
 ENV CLOUD_CODE_HOME ${PARSE_HOME}/cloud
 
-ADD * ${PARSE_HOME}/
+ADD ../../* ${PARSE_HOME}/
 
 WORKDIR $PARSE_HOME
 RUN npm install

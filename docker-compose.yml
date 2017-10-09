@@ -29,7 +29,7 @@ services:
 
   dashboard:
     container_name: parse-dashboard
-    image: czbin/parse-dashboard
+    image: czbin/parse-dashboard:1.1.0
     links:
       - api
     environment:
