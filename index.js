@@ -204,8 +204,8 @@ function addApp(server, item) {
 
     // ----------------------------------------
     var anonymous = !!+(item.anonymous);
-    var allow_client_class_creation = !!+(process.env.ALLOW_CLIENT_CLASS_CREATION);
-    var cloud_code = "/cloud/"+ (item.cloud ||  + item.appName + ".js");
+    var allow_client_class_creation = !!+(item.allow_client_class_creation);
+    var cloud_code = "/cloud/"+ item.appid + "/main.js";
     cloud_code = isFile(cloud_code) || null;
 
 
